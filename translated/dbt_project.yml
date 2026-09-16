@@ -1,0 +1,20 @@
+name: 'bigquery_demo'
+version: '1.0.0'
+config-version: 2
+
+profile: 'bigquery_profile'
+
+model-paths: ["staging", "intermediate", "marts"]
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  bigquery_demo:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: ephemeral
+    marts:
+      +materialized: table

@@ -13,3 +13,17 @@ snowflake_profile:
       schema: TOMWALL_SCHEMA2
       threads: 4
       client_session_keep_alive: False
+
+bigquery_profile:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth                          # Uses gcloud auth application-default login
+      project: <your_gcp_project_id>         # e.g., cloud-professional-services
+      dataset: <your_bigquery_dataset>       # e.g., dbt_analytics (target dataset for created tables/views)
+      threads: 4
+      location: US                           # e.g., US, EU, us-central1
+      timeout_seconds: 300
+      priority: interactive
+

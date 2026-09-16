@@ -186,3 +186,64 @@ If you are presenting this repository for a customer or internal demo, refer to 
 - Queries to run in the Snowflake UI side-by-side
 - Presenter Q&A cheat sheet
 
+---
+
+## 🚀 Running BigQuery Translated Models (`translated/`)
+
+The `translated/` directory is configured as a standalone dbt project containing BigQuery-compatible GoogleSQL models migrated from the Snowflake codebase.
+
+### 1. Install dbt BigQuery Adapter
+```bash
+pip install dbt-bigquery
+```
+
+### 2. Authenticate to Google Cloud
+Authenticate using Application Default Credentials (ADC):
+```bash
+gcloud auth application-default login
+```
+
+### 3. Add `bigquery_profile` to `~/.dbt/profiles.yml`
+```yaml
+bigquery_profile:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: <your_gcp_project_id>    # e.g., cloud-professional-services
+      dataset: <your_target_dataset>    # BigQuery dataset where models will be built
+      threads: 4
+      location: US                      # e.g., US, EU, us-central1
+      timeout_seconds: 300
+      priority: interactive
+```
+
+### 4. Configure Raw Source Variables
+The BigQuery staging sources dynamically reference your source dataset via environment variables:
+```bash
+export DBT_BQ_PROJECT="<gcp_project_holding_raw_data>"
+export DBT_BQ_DATASET="<dataset_holding_raw_customers_and_orders>"
+```
+
+### 5. Execute BigQuery Transformations
+Run dbt targeting the `translated` project directory:
+```bash
+# Verify BigQuery connection
+dbt debug --project-dir translated
+
+# Compile to raw BigQuery SQL
+dbt compile --project-dir translated
+
+# Execute transformations in BigQuery
+dbt run --project-dir translated
+
+# Run data quality tests in BigQuery
+dbt test --project-dir translated
+
+# Or run models and tests end-to-end
+dbt build --project-dir translated
+```
+*(Alternatively, you can `cd translated` and run standard `dbt run`, `dbt test`, etc.)*
+
+
