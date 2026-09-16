@@ -59,6 +59,9 @@ snowflake_dbt_end_to_end/
 │   └── marts/
 │       ├── dim_customers.sql       # Clustered dimension table combining customer profile & purchase history
 │       └── fct_daily_sales.sql     # Clustered incremental fact table aggregating daily revenue & orders
+├── sql/                            # Setup DDL, seed data, and validation SQL queries
+│   ├── snowflake_setup_and_validation.sql # Snowflake setup DDL, sample data & checks
+│   └── bigquery_setup_and_validation.sql  # BigQuery setup DDL, sample data & checks
 └── translated/                     # BigQuery-translated models (for Snowflake-to-BigQuery migration demos)
     ├── staging/
     ├── intermediate/
@@ -245,5 +248,23 @@ dbt test --project-dir translated
 dbt build --project-dir translated
 ```
 *(Alternatively, you can `cd translated` and run standard `dbt run`, `dbt test`, etc.)*
+
+---
+
+## 📄 SQL Setup & Validation Scripts (`sql/`)
+
+Complete scripts for setting up raw tables, inserting mock records, and verifying transformations:
+
+* **Snowflake Script**: [`sql/snowflake_setup_and_validation.sql`](sql/snowflake_setup_and_validation.sql)
+  * Sets context: `SYSADMIN`, `DWH_MIGRATIONS`, `TOMWALL_DB`, `TOMWALL_SCHEMA2`.
+  * Creates transient `RAW_CUSTOMERS` and standard `RAW_ORDERS`.
+  * Inserts sample customers and multi-status orders.
+  * Provides verification queries: orphan order check, customer 360 metrics, daily sales aggregations, and pipeline row count summary.
+
+* **BigQuery Script**: [`sql/bigquery_setup_and_validation.sql`](sql/bigquery_setup_and_validation.sql)
+  * Creates dataset `prabha-test.ecommerce_dataset` and tables `raw_customers` / `raw_orders`.
+  * Inserts matching sample data.
+  * Provides verification queries: orphan order check, `dim_customers` metrics, `fct_daily_sales` summary, and cross-layer row count checks.
+
 
 
