@@ -170,3 +170,14 @@ dbt docs serve
 - **Incremental Loading**: `fct_daily_sales` uses `incremental` materialization with a 3-day lookback window (`dateadd('day', -3, ...)`), minimizing warehouse compute costs on daily updates.
 - **Snowflake Clustering**: Clustered on high-cardinality join and filter keys (`customer_id`, `sales_date`) for optimal micro-partition pruning.
 - **Data Integrity Tests**: Validates uniqueness, non-nullability, and referential integrity (`relationships`) across customer and order sources.
+
+---
+
+## 🎤 Presenting This Project (Live Demo)
+
+If you are presenting this repository for a customer or internal demo, refer to the **[Demo Walkthrough & Presenter Guide](DEMO_WALKTHROUGH.md)** for:
+- 10-minute timed presentation script
+- Talking points for each transformation layer
+- Queries to run in the Snowflake UI side-by-side
+- Presenter Q&A cheat sheet
+
