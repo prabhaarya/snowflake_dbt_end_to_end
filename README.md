@@ -47,17 +47,22 @@ snowflake_dbt_end_to_end/
 ├── dbt_project.yml                 # Core dbt configuration & model defaults
 ├── packages.yml                    # dbt hub dependencies (dbt_utils, snowflake_utils)
 ├── profiles.yml.example            # Snowflake connection template
+├── DEMO_WALKTHROUGH.md             # Presenter cheat sheet & 10-minute live demo script
 ├── README.md                       # Project documentation & runbook
-└── models/
+├── models/                         # Native Snowflake dbt models
+│   ├── staging/
+│   │   ├── src_ecommerce.yml       # Source definitions & data quality tests (unique, not_null, relationships)
+│   │   ├── stg_customers.sql       # Type casting, column renaming, whitespace trimming
+│   │   └── stg_orders.sql          # Order casting, status standardization, numeric rounding
+│   ├── intermediate/
+│   │   └── int_customer_orders_summary.sql # Ephemeral CTE calculating lifetime orders & spend
+│   └── marts/
+│       ├── dim_customers.sql       # Clustered dimension table combining customer profile & purchase history
+│       └── fct_daily_sales.sql     # Clustered incremental fact table aggregating daily revenue & orders
+└── translated/                     # BigQuery-translated models (for Snowflake-to-BigQuery migration demos)
     ├── staging/
-    │   ├── src_ecommerce.yml       # Source definitions & data quality tests (unique, not_null, relationships)
-    │   ├── stg_customers.sql       # Type casting, column renaming, whitespace trimming
-    │   └── stg_orders.sql          # Order casting, status standardization, numeric rounding
     ├── intermediate/
-    │   └── int_customer_orders_summary.sql # Ephemeral CTE calculating lifetime orders & spend
     └── marts/
-        ├── dim_customers.sql       # Clustered dimension table combining customer profile & purchase history
-        └── fct_daily_sales.sql     # Clustered incremental fact table aggregating daily revenue & orders
 ```
 
 ---
