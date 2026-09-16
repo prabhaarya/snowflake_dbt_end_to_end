@@ -1,0 +1,15 @@
+# Copy these contents into ~/.dbt/profiles.yml
+snowflake_profile:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: <your_snowflake_account_identifier>   # e.g., xy12345.us-central1.gcp or org-account
+      user: CE_TEST
+      password: <your_snowflake_password>
+      role: SYSADMIN
+      database: TOMWALL_DB
+      warehouse: DWH_MIGRATIONS
+      schema: TOMWALL_SCHEMA2
+      threads: 4
+      client_session_keep_alive: False

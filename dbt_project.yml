@@ -1,0 +1,22 @@
+name: 'snowflake_demo'
+version: '1.0.0'
+config-version: 2
+
+profile: 'snowflake_profile'
+
+model-paths: ["models"]
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  snowflake_demo:
+    staging:
+      +materialized: view
+      +snowflake_warehouse: DWH_MIGRATIONS
+    intermediate:
+      +materialized: ephemeral
+    marts:
+      +materialized: table
+      +snowflake_warehouse: DWH_MIGRATIONS

@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: raw_ecommerce
+    database: TOMWALL_DB
+    schema: TOMWALL_SCHEMA2
+    tables:
+      - name: raw_customers
+        description: "Raw customer registration records."
+        columns:
+          - name: id
+            tests:
+              - unique
+              - not_null
+      - name: raw_orders
+        description: "Raw customer orders."
+        columns:
+          - name: id
+            tests:
+              - unique
+              - not_null
+          - name: customer_id
+            tests:
+              - not_null
+              - relationships:
+                  to: source('raw_ecommerce', 'raw_customers')
+                  field: id

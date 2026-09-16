@@ -1,0 +1,40 @@
+# dbt build artifacts & logs
+target/
+dbt_packages/
+dbt_modules/
+logs/
+
+# Credentials & environment secrets
+profiles.yml
+.env
+.env.*
+*.pem
+*.key
+
+# Python virtual environments & bytecode
+.venv/
+venv/
+env/
+ENV/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# Operating System files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+
+# IDE & Editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
